@@ -1,0 +1,32 @@
+[
+  {
+    "marca": "Toyota",
+    "modelo": "Corolla",
+    "capacidadeTanque": 50.0,
+    "consumoMedio": 15.5
+  },
+  {
+    "marca": "Honda",
+    "modelo": "Civic",
+    "capacidadeTanque": 47.0,
+    "consumoMedio": 14.8
+  },
+  {
+    "marca": "Ford",
+    "modelo": "Focus",
+    "capacidadeTanque": 52.0,
+    "consumoMedio": 12.5
+  },
+  {
+    "marca": "Chevrolet",
+    "modelo": "Onix",
+    "capacidadeTanque": 44.0,
+    "consumoMedio": 17.0
+  },
+  {
+    "marca": "Volkswagen",
+    "modelo": "Golf",
+    "capacidadeTanque": 50.0,
+    "consumoMedio": 13.2
+  }
+]
