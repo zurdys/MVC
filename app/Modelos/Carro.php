@@ -48,11 +48,11 @@ class Carro
 
     public function autonomiaTanqueCompleto(): int
     {
-        return $this->consumoMedio * $this->capacidadeTanque;
+        return round($this->consumoMedio * $this->capacidadeTanque);
     }
 
     public function autonomiaAtual(): int
     {
-        return $this->consumoMedio * $this->combustivelNoTanque;
+        return round($this->consumoMedio * $this->combustivelNoTanque);
     }
 }

@@ -19,6 +19,8 @@ services:
       - ./docker/nginx/:/etc/nginx/conf.d/
     networks:
       - proxy
+#    ports:
+#      - "8081:80"
 
 #  mariadb:
 #    image: mariadb:latest
