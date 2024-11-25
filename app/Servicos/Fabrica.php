@@ -3,6 +3,7 @@
 namespace App\Servicos;
 
 use App\Modelos\Carro;
+use App\Modelos\Moto;
 
 class Fabrica
 {
@@ -15,5 +16,16 @@ class Fabrica
         }
 
         return $carros;
+    }
+
+    public static function fabricarMotos(array $dadosMotos): array
+    {
+        $motos = [];
+
+        foreach ($dadosMotos as $infoMoto) {
+            $motos[] = new Moto($infoMoto);
+        }
+
+        return $motos;
     }
 }

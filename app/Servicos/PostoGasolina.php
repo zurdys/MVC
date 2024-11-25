@@ -3,6 +3,8 @@
 namespace App\Servicos;
 
 use App\Modelos\Carro;
+use App\Modelos\Moto;
+use App\Modelos\Veiculo;
 
 class PostoGasolina
 {
@@ -47,36 +49,36 @@ class PostoGasolina
         return $this->valorFaturado;
     }
 
-    public function abastecerPorValor(Carro $carro, float $valor): void
+    public function abastecerPorValor(Veiculo $veiculo, float $valor): void
     {
         $litros = $valor / $this->precoGasolina;
 
         try {
-            $carro->setCombustivelNoTanque($litros);
+            $veiculo->setCombustivelNoTanque($litros);
             $this->faturar($valor);
             $this->setQuantidadeAbastecida($litros);
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
-            $this->completarTanque($carro);
+            $this->completarTanque($veiculo);
         }
     }
 
-    public function abastecerPorQuantidade(Carro $carro, float $litros): void
+    public function abastecerPorQuantidade(Carro|Moto $veiculo, float $litros): void
     {
         try {
-            $carro->setCombustivelNoTanque($litros);
+            $veiculo->setCombustivelNoTanque($litros);
             $this->faturar($litros * $this->precoGasolina);
             $this->setQuantidadeAbastecida($litros);
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
-            $this->completarTanque($carro);
+            $this->completarTanque($veiculo);
         }
     }
 
-    public function completarTanque(Carro $carro): void
+    public function completarTanque(Carro|Moto $veiculo): void
     {
-        $litros = $carro->getQuantidadeLivreTanque();
-        $this->abastecerPorQuantidade($carro, $litros);
+        $litros = $veiculo->getQuantidadeLivreTanque();
+        $this->abastecerPorQuantidade($veiculo, $litros);
         $this->faturar($litros * $this->precoGasolina);
         $this->setQuantidadeAbastecida($litros);
     }
