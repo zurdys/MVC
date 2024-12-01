@@ -4,7 +4,7 @@ namespace App\Modelos;
 
 use RuntimeException;
 
-class Veiculo
+abstract class Veiculo
 {
     public static float $PORCENTAGEM_TANQUE_VEICULO_NOVO = 30 / 100;
     private float $combustivelNoTanque;
@@ -17,17 +17,17 @@ class Veiculo
     {
         $this->marca = $dadosVeiculo['marca'];
         $this->modelo = $dadosVeiculo['modelo'];
-        $this->consumoMedio = $dadosVeiculo['consumoMedio'];
         $this->capacidadeTanque = $dadosVeiculo['capacidadeTanque'];
+        $this->consumoMedio = $dadosVeiculo['consumoMedio'];
         $this->combustivelNoTanque = $this->capacidadeTanque * self::$PORCENTAGEM_TANQUE_VEICULO_NOVO;
     }
 
-    public function getInfo(): string
+    public function info(): string
     {
         return "$this->marca/$this->modelo";
     }
 
-    public function getQuantidadeLivreTanque(): float
+    public function quantidadeLivreTanque(): float
     {
         return $this->capacidadeTanque - $this->combustivelNoTanque;
     }
@@ -37,13 +37,13 @@ class Veiculo
         return $this->combustivelNoTanque;
     }
 
-    public function setCombustivelNoTanque(int|float $qntParaAbastecer): void
+    public function setCombustivelTanque(int|float $qtdParaAbastecer): void
     {
-        if ($qntParaAbastecer > $this->getQuantidadeLivreTanque()) {
-            throw new RuntimeException('Tentativa de abastecer quantidade superior a disponível no carro: ' . $this->getInfo());
-        }
+        if ($qtdParaAbastecer > $this->quantidadeLivreTanque()) {
+            throw new RuntimeException("Tentativa de abastecer quantidade superior a disponivel no tanque do carro: " . $this->info());
+        } 
 
-        $this->combustivelNoTanque = round($this->combustivelNoTanque + $qntParaAbastecer);
+        $this->combustivelNoTanque = round($this->combustivelNoTanque + $qtdParaAbastecer);
     }
 
     public function autonomiaTanqueCompleto(): int
