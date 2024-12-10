@@ -1,32 +1,31 @@
 <?php
 
+use App\Entity\Video;
+use App\Repository\VideoRepository;
+
 $pdo = new PDO("mysql:host=mariadb;dbname=banquinho", "root", "Psswd#123");
 
 $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
-if ($id === FALSE) {
+if ($id === FALSE || $id === null) {
     header("Location: /?sucesso=0");
     exit();
 }
 
 $url = filter_input(INPUT_POST, 'url', FILTER_VALIDATE_URL);
-if ($url === false) {
+if ($url === false || $id === null) {
     header('Location: /?sucesso=0');
     exit();
 }
 $titulo = filter_input(INPUT_POST, 'titulo', FILTER_SANITIZE_EMAIL);
-if ($titulo === false) {
+if ($titulo === false || $id === null) {
     header('Location: /?sucesso=0');
     exit();
 }
 
-$sql = "UPDATE videos SET url = ?, title = ? WHERE id = ?";
-$stmt = $pdo->prepare($sql);
-$stmt->bindValue(1, $url);
-$stmt->bindValue(2, $titulo);
-$stmt->bindValue(3, $id, PDO::PARAM_INT);
+$video = new Video($url, $titulo);
+$video->setId($id);
 
-if ($stmt->execute() === false) {
-    header('Location: /?sucesso=0');
-} else {
-    header('Location: /?sucesso=1');
-}
+$repository = new VideoRepository($pdo);
+$repository->update($video);
+
+header("Location: /");
